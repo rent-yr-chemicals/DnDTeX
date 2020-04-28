@@ -1,0 +1,83 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{gforeach}
+
+\RequirePackage{pgfkeys}
+
+\def\undef#1{\let#1\undefined}
+
+\def\multidef#1#2#3{%
+	\def\@multidef##1#3##2\@nil##3#3##4\@nil{%
+		\def##1{##3}%
+		\def\multidef@temp{##2}%
+		\ifx\multidef@temp\empty%
+			\expandafter\@gobblefour%
+		\fi%
+		\@multidef##2\@nil##4\@nil%
+	}%
+	\@multidef#1#3\@nil#2#3#3\@nil%
+	\undef\multidef@temp%
+	\undef\@multidef%
+}
+
+\def\multiundef#1#2{%
+	\def\@multiundef##1#2##2\@nil{%
+		\undef##1%
+		\def\multiundef@temp{##2}%
+		\ifx\multiundef@temp\empty%
+			\expandafter\@gobblethree%
+		\fi%
+		\@multiundef##2\@nil%
+	}%
+	\@multiundef#1#2\@nil%
+	\undef\multiundef@temp%
+	\undef\@multiundef%
+}
+
+\pgfkeys{%
+	/gforeach/.is family,
+	/gforeach,
+	item delimiter/.code={\def\gforeach@itemdelim{#1}},
+	subitem delimiter/.code={\def\gforeach@subitemdelim{#1}}
+}
+
+\long\def\@gforeach#1#2 #3in #4#5{%
+	\def\@gforeach@function{#5}%
+	\long\def\@gforeach@loop##1#1##2\@nil{%
+		\multidef{#3}{\romannumeral-`X##1}{#2}%
+		\@gforeach@function%
+		\def\@gforeach@remaining{##2}%
+		\ifx\@gforeach@remaining\@empty%
+			\expandafter\@gobbletwo%
+		\fi%
+		\@gforeach@loop##2\@nil%
+	}%
+	\expandafter\@gforeach@loop#4#1\@nil%
+	\undef\@gforeach@function%
+	\undef\@gforeach@loop%
+	\undef\@gforeach@remaining%
+	\multiundef{#3}{#2}%
+}
+
+\long\def\@gforeach@onearg#1 #2in #3#4{\@gforeach#1 #2in {#3}{#4}}
+
+\def\gforeach@setdelimiters{%
+	\edef\gforeach@delimiters{\gforeach@itemdelim\gforeach@subitemdelim}%
+	\expandafter\@gforeach@onearg\expandafter{\gforeach@delimiters} }
+
+\def\gforeach{%
+	\def\gforeach@itemdelim{,}%
+	\def\gforeach@subitemdelim{/}%
+	\futurelet\next\gforeach@getoptions%
+}
+\def\gforeach@getoptions{%
+	\ifx\next[%]
+		\expandafter\gforeach@getdelimiters%
+	\else%
+		\expandafter\gforeach@setdelimiters%
+	\fi%
+}
+\def\gforeach@getdelimiters[#1]{%
+	\pgfkeys{/gforeach,#1}\expandafter\gforeach@setdelimiters%
+}
+
+\endinput

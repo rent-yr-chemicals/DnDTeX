@@ -1,0 +1,341 @@
+% !TeX program = LuaLaTeX 
+\documentclass{charactersheet5e}
+
+\newfontfamily{\altsffamily}{SourceSansPro}[
+	Path=./resources/,
+	Extension=.ttf,
+	UprightFont=*-Regular,
+	BoldFont=*-Bold,
+	ItalicFont=*-Italic,
+	BoldItalicFont=*-BoldItalic
+]
+\newfontfamily{\altsffamilylight}{SourceSansPro-Light}[% not currently used, just here if you want it
+	Path=./resources/,
+	Extension=.ttf,
+	ItalicFont=*Italic
+]
+\newfontfamily{\altsffamilysemi}{SourceSansPro-SemiBold}[
+	Path=./resources/,
+	Extension=.ttf,
+	ItalicFont=*Italic
+]
+
+\BackgroundImage{./resources/background.pdf}
+
+\usepackage{blindtext}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%	BASICS
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\CharacterName{(Placeholder)}
+
+\Level{1}
+
+\Class{Rogue}
+\Background{Urchin}
+\PlayerName{(Name)}
+\Race{Wood Elf}
+\Alignment{Chaotic-Good}
+
+\ExperiencePoints{0}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%	STATS
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\STR{12}
+\DEX{20}
+\CON{13}
+\INT{13}
+\WIS{17}
+\CHA{13}
+
+\Proficiency{2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%	SKILLS, PROFICIENCIES, INSPIRATION
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ProficientSave{DEX}
+\ProficientSave{INT}
+
+\ProficientSkill{Acrobatics}
+\ProficientSkill{Deception}
+\ProficientSkill{Insight}
+\ProficientSkill{Intimidation}
+\ProficientSkill{Perception}
+\ProficientSkill{Sleight of Hand}
+\ProficientSkill{Stealth}
+
+\SkillBonus{Stealth}{+Proficiency}
+\SkillBonus{Perception}{+Proficiency}
+
+\PassiveWisdom{10+Perception}
+
+\Inspiration{false}
+
+\OtherProficienciesAndLanguages{%
+%
+	{\bfseries Languages}: Common, Elvish \par\spacer
+	{\bfseries Tools}: Thieves' tools, disguise kit \par\spacer
+	{\bfseries Weapons}: Simple weapons, longbow, shortbow, longsword, shortsword, hand crossbow, rapier \par\spacer	
+	{\bfseries Armor}: Light armor \par\spacer
+	{\bfseries Expertise}: Double proficiency bonus on Stealth and Perception
+%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%	COMBAT
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ArmorClass{11 + DEX mod}
+\Speed{35}
+
+\HitPoints{9}{9}
+\TemporaryHitPoints{0}{0}
+\HitDice{1d8}{1d8}
+
+\DeathSaveSuccesses{0}
+\DeathSaveFails{0}
+	
+\Weapon%
+	{Shortsword\textsuperscript{\tiny1}}%
+	{DEX mod + Proficiency}%
+	{1d6\plus\getstat{DEX mod}}%
+	{piercing}%
+\Weapon%
+	{Shortbow\textsuperscript{\tiny2}}%
+	{DEX mod + Proficiency}%
+	{1d6\plus\getstat{DEX mod}}%
+	{piercing}%
+\Weapon%
+	{Dagger\textsuperscript{\tiny1,3}}%
+	{DEX mod + Proficiency}%
+	{1d4\plus\getstat{DEX mod}}%
+	{piercing}%
+
+\AttacksAndSpellcasting{%
+%
+	{\tiny1.}\,\,Finesse \par
+	{\tiny2.}\,\,Ranged: {\bfseries80 ft}, {\bfseries320 ft} with disadvantage \par
+	{\tiny3.}\,\,Thrown: {\bfseries20 ft}, {\bfseries60 ft} with disadvantage \par
+	
+	\spacer[2.5pt]
+	
+	{\bfseries Sneak\,Attack}:\,\,Once per turn, on a successful attack, deal one creature {\bfseries1d6} extra damage with
+		a finesse or ranged weapon if:
+	\begin{conditions}
+		\item You have advantage on the attack roll
+		\item You don't have \emph{dis}advantage, and the target has another (non-incapacitated) enemy within {\bfseries5 ft}
+	\end{conditions}
+%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%	GEAR
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Equipment{%
+%
+	\begin{indented}
+		{\bfseries Weapons}: Shortsword, shortbow \& 20 arrows, 2 daggers \par\spacer
+		{\bfseries Armor}: Leather armor \par\spacer
+		{\bfseries Tools}: Thieves' tools (small file, lockpicks, handle mirror, narrow-bladed scissors, pliers) \par\spacer
+		{\bfseries Burglar's pack}: 5 day's rations, waterskin, tinderbox, hooded lantern \& 2 flasks of oil, 5 candles,
+				crowbar, hammer, 10 pitons, 1000 ball bearings, bell, 10 feet of string, 50 feet of hemp rope \par
+	\end{indented}
+	\par\spacer
+	{\bfseries Other}: Common clothes, small knife, map of {\color{black!50}[home city]}, {\color{black!50}["token of home''(?)]}
+%
+}
+
+\CopperPieces{}
+\SilverPieces{}
+\ElectrumPieces{}
+\GoldPieces{10}
+\PlatinumPieces{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%	PERSONAL DETAILS
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\PersonalityTraits{\itshape "Your text here."}
+\Ideals{\itshape "Your text here."}
+\Bonds{\itshape "Your text here."}
+\Flaws{\itshape "Your text here."}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%	FEATURES AND TRAITS
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\FeaturesAndTraits{%
+%
+	\begin{feature}{Darkvision}
+		\item See {\bfseries60ft} in dim light as if it were bright light
+		\item See in darkness as if it were dim light; cannot see color in darkness
+	\end{feature}
+	
+	\begin{feature}{Fey Ancestry}
+		\item Advantage on saving throws against being charmed
+		\item Cannot be put to sleep by magic
+	\end{feature}
+	
+	\begin{feature}{Trance}
+		\item Don't need to sleep; instead, receive the equivalent of 8 hours sleep after 4 hours of semi-conscious meditation
+	\end{feature}
+	
+	\begin{feature}{Mask of the Wild}
+		\item Attempt hide when only lightly obscured by foliage, heavy rain, snow, mist, and other natural phenomena
+	\end{feature}
+	
+	\begin{feature}{Thieves' Cant}
+		\item Hide secret messages in ordinary conversation; only others who know the Thieves' Cant can understand. Hidden
+			message take 4 times longer to convey
+		\item Recognize secret signs and symbols in the environment, indicating safety/danger, nearby treasure, thieves' guild
+			territories, etc.
+	\end{feature}
+	
+	\begin{feature}{City Secrets}
+		\item Know the patterns and flows of cities; able to find hidden routes and passages
+		\item When not in combat, travel (and lead others) through cities twice as fast
+	\end{feature}
+%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%	CHARACTER APPEARANCE
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Age{32}
+\Height{6 ft.}
+\Weight{130 lbs.}
+\Eyes{Green}
+\Skin{Tan}
+\Hair{Black}
+
+\CharacterAppearance{%
+	\begin{tikzpicture}
+		\draw[very thick,fill=white] (0,0) circle (0.9);
+		\draw[very thick] (0,-0.9) -- ++(0,-2.5) -- +(-0.5,-2.5) +(0,0) -- +(0.5,-2.5) ;
+		\draw[very thick] (0,-1.1) -- +(-0.8,-2) +(0,0) -- +(0.8,-2);
+	\end{tikzpicture}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%	BACKSTORY
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Backstory{\setlength\parskip{1ex}\setlength\parindent{0em}%
+\blindtext[2]
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%	ALLIES AND ORGANIZATIONS
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\AlliesAndOrganizations{\blindtext[1]}
+
+\AlliesAndOrganizations[Name]{(Placeholder)}
+
+\AlliesAndOrganizations[Symbol]{%
+	\begin{tikzpicture}
+		\node at (0,0) [shape=circle,minimum size=1in,draw,dashed]{Placeholder};
+	\end{tikzpicture}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%	ADDITIONAL FEATURES AND TRAITS
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\AdditionalFeaturesAndTraits{\blindtext[2]}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%	TREASURE
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Treasure{\blindtext[2]}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%	SPELLCASTING
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\SpellcastingClass{(Placeholder)}
+
+\SpellcastingAbility{INT}
+
+\Cantrip{Foo}
+\Cantrip{Bar}
+\Cantrip{Baz}
+
+\SpellSlots{Level One}{4}{3}
+\Spell{Level One}{Foo}{}
+\Spell{Level One}{Bar}{Prepared}
+
+\SpellSlots{Level Two}{4}{3}
+\Spell{Level Two}{Foo}{}
+\Spell{Level Two}{Bar}{Prepared}
+
+\SpellSlots{Level Three}{4}{3}
+\Spell{Level Three}{Foo}{}
+\Spell{Level Three}{Bar}{Prepared}
+
+\SpellSlots{Level Four}{4}{3}
+\Spell{Level Four}{Foo}{}
+\Spell{Level Four}{Bar}{Prepared}
+
+\SpellSlots{Level Five}{4}{3}
+\Spell{Level Five}{Foo}{}
+\Spell{Level Five}{Bar}{Prepared}
+
+\SpellSlots{Level Six}{4}{3}
+\Spell{Level Six}{Foo}{}
+\Spell{Level Six}{Bar}{Prepared}
+
+\SpellSlots{Level Seven}{4}{3}
+\Spell{Level Seven}{Foo}{}
+\Spell{Level Seven}{Bar}{Prepared}
+
+\SpellSlots{Level Eight}{4}{3}
+\Spell{Level Eight}{Foo}{}
+\Spell{Level Eight}{Bar}{Prepared}
+
+\SpellSlots{Level Nine}{4}{3}
+\Spell{Level Nine}{Foo}{}
+\Spell{Level Nine}{Bar}{Prepared}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%	END
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\MakeCharacterSheet
+\end{document}

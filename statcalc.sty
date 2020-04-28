@@ -1,0 +1,91 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{statcalc}
+
+\RequirePackage{pgfkeys}
+\RequirePackage{pgffor}
+
+\pgfkeys{
+	/get stat from string/.is family,
+	/get stat from string,
+	store in/.code={\def\@statvalue{#1}},
+	store/.code={\expandafter\edef\@statvalue{#1}},
+	.unknown/.style={store=\pgfkeyscurrentname}
+}
+
+\newcommand{\addstat}[2]{
+	\xdef\key@temp{
+		/get stat from string,#1/.style={store=#2}
+	}
+	\expandafter\pgfkeys\expandafter{\key@temp}
+}
+
+%\addstat{<key name>}{<macro with stat value>}
+
+\def\getvalue#1#2{\pgfkeys{/get stat from string,store in=#2,#1}}
+
+\newcommand{\statcalc@tocommalist}[3]{%
+	\begingroup%
+		\toks@{}%
+		\let\@tmp\relax%
+		\long\def\@tocommalist##1#2##2\@nil{%
+			\ifx\@tmp\relax%
+				\toks@{{##1}}%
+			\else%
+				\toks@\expandafter{\the\toks@,{##1}}%
+			\fi%
+			\def\@tmp{##2}%
+			\ifx\@tmp\@empty%
+				\expandafter\@gobbletwo%
+			\fi%
+			\@tocommalist##2\@nil%
+    		}%
+		\expandafter\@tocommalist#3#2\@nil%
+	\expandafter\endgroup%
+	\expandafter\def\expandafter#1\expandafter{\the\toks@}%
+}
+
+\def\isletter#1{\ifcat #1a11\else01\fi}
+
+\def\@calculate#1{%
+	\def\stat@string{}%
+	\def\@formula{}%
+	\statcalc@tocommalist{\formula@as@list}{}{#1}%
+	\foreach \x in \formula@as@list{%
+		\if\isletter{\x}%
+			\xdef\stat@string{\stat@string\x}%
+		\else	\if\x:%
+			\xdef\stat@string{\stat@string\x}%
+		\else%
+			\ifx\stat@string\empty%
+				\relax%
+			\else%
+				\getvalue{\stat@string}{\stat@value}%
+				\xdef\@formula{\@formula\stat@value}%
+				\xdef\stat@string{}%
+			\fi%
+			\xdef\@formula{\@formula\x}%
+		\fi\fi%
+	}%
+	\ifx\stat@string\empty%
+		\relax%
+	\else%
+		\getvalue{\stat@string}{\stat@value}%
+		\xdef\@formula{\@formula\stat@value}%
+	\fi%
+	\pgfmathparse{int(floor(\@formula))}%
+}
+
+\def\calculate@star#1#2{\@calculate{#1}\edef#2{\pgfmathresult}}
+\def\calculate@nostar#1{\@calculate{#1}\pgfmathresult}
+\def\calculate{\@ifstar{\calculate@star}{\calculate@nostar}}
+
+\let\getstat\calculate
+
+\newcommand{\statcalc@stripspaces}[2]{%
+	\def\temp@argnospaces{}%
+	\statcalc@tocommalist{\@argcharacters}{}{#1}%
+	\foreach \@character in \@argcharacters{\xdef\temp@argnospaces{\temp@argnospaces\@character}}%
+	\edef#2{\temp@argnospaces}%
+}
+
+\endinput
