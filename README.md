@@ -10,7 +10,7 @@ Additionally, you'll probably want some nicer fonts, as LaTeX's default sans-ser
 
 Lastly, and most importantly, you'll need the blank 5E character sheet to use as a backdrop. This package *only* lays out content on top of the blank character sheet (and automates some calculations), you'll need to supply the blank one on your own. I haven't included one in this repository, as I'm not entirely clear on how Wizards of the Coast's copyright applies here, but they're freely available on [their official website](https://dnd.wizards.com/products/tabletop-games/trpg-resources/trpg-resources). Click "Fifth Edition Character Sheets" to download a zip archive with a few sheets, and find the one called "DnD_5E_CharacterSheet - Form Fillable.pdf".
 
-The sample I've included assumes that the project directory contains a "resources" subdirectory containing the font files and blank character sheet called "background.pdf". If that doesn't make you happy, feel free put them wherever and called them whatever you like, just change the appropriate lines in your `.tex` file.
+The sample I've included assumes that the project directory contains a "resources" subdirectory with the font files and a blank character sheet called "background.pdf". If that doesn't make you happy, feel free to put them wherever and call them whatever you like, just change the appropriate lines in your `.tex` file.
 
 # Usage
 ...
