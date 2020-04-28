@@ -10,7 +10,7 @@ Additionally, you'll probably want some nicer fonts, as LaTeX's default sans-ser
 
 Lastly, and most importantly, you'll need the blank 5E character sheet to use as a backdrop. This package *only* lays out content on top of the blank character sheet (and automates some calculations), you'll need to supply the blank one on your own. I haven't included one in this repository, as I'm not entirely clear on how Wizards of the Coast's copyright applies here, but they're freely available on [their official website](https://dnd.wizards.com/products/tabletop-games/trpg-resources/trpg-resources). Click "Fifth Edition Character Sheets" to download a zip archive with a few sheets, and find the one called "DnD_5E_CharacterSheet - Form Fillable.pdf".
 
-The sample I've included assumes that the project directory contains a "resources" subdirectory with the font files and a blank character sheet called "background.pdf". If that doesn't make you happy, feel free to put them wherever and call them whatever you like, just change the appropriate lines in your `.tex` file.
+The sample I've included assumes the project directory includes a "resources" subdirectory with the font files and a blank character sheet called "background.pdf". If that doesn't make you happy, feel free to put them wherever you like, just change the appropriate lines in your `.tex` file.
 
 # Usage
 The basic document format is
@@ -19,7 +19,7 @@ The basic document format is
 \BackgroundImage{path/to/blank/character/sheet.pdf}
 
 \newfontfamily{\altsffamily}{YourFont}
-\newfontfamily{\altsffamilysemi}{YourFont Semibold Version} % optional but suggested
+\newfontfamily{\altsffamilysemi}{YourFont Semibold Version} % optional but recommended
 
 % ...
 % Character info commands... (see below)
@@ -38,7 +38,7 @@ The only commands that are *strictly* necessary to include are `\BackgroundImage
 
 * `\BackgroundImage{<path to blank character sheet>}`: Specifies the background file. Path syntax is the same as `\includegraphics`: accepts a relative or absolute path, absolute paths must be enclosed in an extra set of braces
 
-* Fonts: Specified with `fontspec`. The class uses a mix of LaTeX's default sans-serif font (for the extra-large, bold numbers) and an alternate, user-defined font (for basically everything else). The user font is specified as `\altsffamily` (normal, bold, italic, bold-italic) and `altsffamilysemi` (semibold, looks better for some extra-large text). For the most part, fields using `\altsffamily` will do so automatically with no user action necessary; however, the user still needs to define these families at the beginning of the document (see sample sheet). If no font definition is provided, the class will fall back on the default sans-serif font.
+* Fonts: Specified with `fontspec`. The class uses a mix of LaTeX's default sans-serif font (for the extra-large, bold numbers) and an alternate, user-defined font (for basically everything else). The user font is specified as `\altsffamily` (normal, bold, italic, bold-italic) and `altsffamilysemi` (semibold, used for extra-large text like the character name). For the most part, fields using `\altsffamily` will do so automatically with no user action necessary; however, the user still needs to define these families at the beginning of the document (see sample sheet). If no font definition is provided, the class will fall back on the default sans-serif font.
 
 ### Basic Character Details
 
