@@ -327,20 +327,13 @@
 	\def\@Hit@Points@Total{#2}
 }
 
-\newcommand{\TemporaryHitPoints}[2]{
+\newcommand{\TemporaryHitPoints}[1]{
 	\def\@Temp@Hit@Points{#1}
-	\def\@Temp@Hit@Points@Total{#2}
-	\count255 = #1
-	\ifnum\count255 > 0
-		\def\@Temp@Hit@Points@Opacity{1.0}
-	\else
-		\def\@Temp@Hit@Points@Opacity{0.0}
-	\fi
 }
 
 \HitDice{}{}
 \HitPoints{}{}
-\TemporaryHitPoints{0}{0}
+\TemporaryHitPoints{}
 
 
 \newcount\DeathSaveSuccess@count
@@ -835,9 +828,15 @@
 					\Huge\bfseries\@Hit@Points\color{black!20}{\normalsize\ / \@Hit@Points@Total}%
 				};
 			\fi
-			\node at (3.275,3.9) [opacity=\@Temp@Hit@Points@Opacity] {%
-				\Huge\bfseries\@Temp@Hit@Points\color{black!20}{\normalsize\ / \@Temp@Hit@Points@Total}%
-			};
+			\ifx\@Temp@Hit@Points\@empty
+				\relax
+			\else\ifnum\@Temp@Hit@Points=0
+				\relax
+			\else
+				\node at (3.275,3.9) {%
+					\Huge\bfseries\@Temp@Hit@Points%
+				};
+			\fi\fi
 		\end{scope}
 		
 		\node at (3.275,4.75)
@@ -985,7 +984,7 @@
 			
 			% adjust text depth to compensate for extra weapons
 			\newdimen\textdepth@adjusted
-			\textdepth@adjusted=1.49in
+			\textdepth@adjusted=1.48in
 			\advance\textdepth@adjusted by 6.23653in
 			\advance\textdepth@adjusted by -\last@rowy
 			
