@@ -213,27 +213,6 @@
 
 %%% SKILLS %%%
 
-%\def\@skills{%
-%	Acrobatics/DEX,
-%	AnimalHandling/WIS,
-%	Arcana/INT,
-%	Athletics/STR,
-%	Deception/CHA,
-%	History/INT,
-%	Insight/WIS,
-%	Intimidation/CHA,
-%	Investigation/INT,
-%	Medicine/WIS,
-%	Nature/INT,
-%	Perception/WIS,
-%	Performance/CHA,
-%	Persuasion/CHA,
-%	Religion/INT,
-%	SleightOfHand/DEX,
-%	Stealth/DEX,
-%	Survival/WIS%
-%}
-
 \def\@skills{%
 	Acrobatics/DEX,
 	AnimalHandling/WIS,
