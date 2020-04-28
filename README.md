@@ -132,11 +132,13 @@ Initiative is calculated automatically from the dexterity modifier. Commands for
 
 ### Money
 The player's coins are defined with:
+
 * `\CopperPieces{<value>}`
 * `\SilverPieces{<value>}`
 * `\ElectrumPieces{<value>}`
 * `\GoldPieces{<value>}`
 * `\PlatinumPieces{<value>}`
+
 Commands can be called with an empty argument, or omitted entirely; in either case, the displayed value defaults to zero.
 
 # License
