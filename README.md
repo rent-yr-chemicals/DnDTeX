@@ -101,7 +101,7 @@ For `\ProficientSkill` and `\SkillBonus`, valid arguments are:
   * Skill names are *not* space-sensitive. All spaces are ignored, so `AnimalHandling` and `Animal Handling` are equally valid.
   * There is one exception to the case-sensitive rule: `SleightofHand` is valid as well as `SleightOfHand` (and therefore also `Sleight of Hand` and `Sleight Of Hand`). There's no good reason for this besides code aesthetics.
 
-`\SkillBonus` supports automatic parsing of equations and stat names. So, for example, calling
+`\SkillBonus` supports automatic parsing of formulas and stat names. So, for example, calling
 ```latex
 \ProficientSkill{Stealth}
 \SkillBonus{Stealth}{Proficiency}
@@ -116,7 +116,7 @@ adds double Proficiency plus 3 to Animal Handling.
 A number of other commands support this mechanic as well; see later for more detailed documentation.
 
 ### Passive Wisdom
-* `\PassiveWisdom{<value>}`: Sets the passive wisdom score. This should generally just be 10+Perception, but the command is here in case you want to change that for some reason. Supports automatics stat/equation parsing, so feel free to just call `\PassiveWisdom{10+Perception}` and forget about it.
+* `\PassiveWisdom{<value>}`: Sets the passive wisdom score. This should generally just be 10+Perception, but the command is here in case you want to change that for some reason. Supports automatics stat/formula parsing, so feel free to just call `\PassiveWisdom{10+Perception}` and forget about it.
 
 ### Inspiration
 * `\Inspiration{<true/false>}`: Whether your character has inspiration. Calling with `true` (case-insensitive) will place a mark in the "Inspiration" box; *any* other argument (or an empty argument) will evaluate to false, and give no mark.
@@ -124,7 +124,7 @@ A number of other commands support this mechanic as well; see later for more det
 ### Combat Stats
 Initiative is calculated automatically from the dexterity modifier. Commands for other combat stats are:
 
-* `\ArmorClass{<value>}`: Sets the armor class. Supports automatic stat/equation parsing.
+* `\ArmorClass{<value>}`: Sets the armor class. Supports automatic stat/formula parsing.
 * `\Speed{<value>}`: Sets the speed. Self explanatory.
 * `\HitPoints{<current value>}{<max value>}`: Sets the character's hit points. Can be omitted or arguments can be empty, in which case nothing will be printed.
 * `\TemporaryHitPoints{<value>}`: Sets temporary hit points. Nothing will be printed if omitted, or if `<value>` is empty or 0.
@@ -133,7 +133,7 @@ Initiative is calculated automatically from the dexterity modifier. Commands for
 * `\DeathSaveFails{<value>}`: The current number of failed death saving throws
 
 ### Weapons
-* `\Weapon{<weapon name>}{<attack bonus>}{<damage>}{<damage type>}`: Adds a weapon in the "Attacks & Spellcasting" box. The `<attack bonus>` field supports automatic stat/equation parsing.
+* `\Weapon{<weapon name>}{<attack bonus>}{<damage>}{<damage type>}`: Adds a weapon in the "Attacks & Spellcasting" box. The `<attack bonus>` field supports automatic stat/formula parsing.
  
 `\Weapon` can be called multiple times; weapons will be printed in the order they are called. The official character sheet from Wizards of the Coast only includes three weapon boxes. However, `\Weapon` *can* be called more than three times; in this case, additional boxes will be drawn, and any content in the text box below (see `\AttackAndSpellcasting`) will be automatically shifted downwards to compensate.
 
@@ -227,7 +227,7 @@ Spell slots are set with:
 
 * `\SpellSlots{<level>}{<total>}{<remaining>}`: Set the slots at the specified level. Valid arguments for `<level>` are the same as for `\Spell`. Draws `<total>` spell slot markers, with `<remaining>` drawn boldly and the rest grayed-out.
 
-### Misc
+### Miscellaneous Tools
 
 A few additional commands are included for formatting convenience. They're not necessary, but use them if you want them.
 
@@ -253,6 +253,85 @@ Do this thing if:
 * `\spacer[<dimension>]`: Prints a gray, horizontal line; nice for separating fields within text boxes. Seen in the sample sheet under "Equipment" and "Other Proficiencies & Languages". The optional `<dimension>` argument sets the vertical space after the spacer; default is `0.35ex`.
 
 * `\plus` and `\minus`: Formatted + and - signs for stat modifiers. LaTeX's default +/- look too big when they're not in an equation; these sometimes look better. Use to taste.
+
+## Automatic Formula and Stat Parsing
+A few of commands can automatically parse formulas in their arguments, as well as automatically recognize the names of stats and substitute these for the corresponding values. Commands with this ability built in are:
+
+* `\SkillBonus`
+* `\PassiveWisdom`
+* `\ArmorClass`
+* `\Weapon`: 2nd argument (Attack Bonus) only
+
+In addition to these commands, the `\calculate` macro is available if you'd like to use this capability anywhere else in the document. Usage is:
+
+* `\calculate{<formula>}`: evaluates `<formula>` and prints the result.
+* `\calculate*{<formula>}{<macro>}`: evaluates `<formula>` and stores the result in `<macro>`; nothing is printed.
+
+The un-starred version should work in *most* parts of the document; it will break occasionally, on account of it's terribly designed. I haven't tested every possible command/environment, but I have confirmed that it doesn't work inside `\Spell` or `\Cantrip`. In these cases, use the starred version outside the offending command, then insert the result:
+```latex
+% This will break:
+\Spell{Level One}{...\calculate{<a formula>}...}{}
+
+% Do this instead:
+\calculate*{<a formula>}{\myresult}
+\Spell{Level One}{...\myresult...}{}
+```
+These issues will hopefully be fixed at some point in a later update. Hopefully.
+
+The command `\getstat` is also available as an alias to `\calculate`; the two are functionally identical in every way. I'm not sure why I included it, but if you think one makes for more aesthetic code than the other, the choice is there.
+
+### Syntax
+Recognized stat names are:
+
+* Abilities (score and modifiers, respectively):
+  * `STR`, `STR mod`
+  * `DEX`, `DEX mod`
+  * `CON`, `CON mod`
+  * `INT`, `INT mod`
+  * `WIS`, `WIS mod`
+  * `CHA`, `CHA mod`
+* Skills:
+  * `Acrobatics`
+  * `Animal Handling`
+  * `Arcana`
+  * `Athletics`
+  * `Deception`
+  * `History`
+  * `Insight`
+  * `Intimidation`
+  * `Investigation`
+  * `Medicine`
+  * `Nature`
+  * `Perception`
+  * `Performance`
+  * `Persuasion`
+  * `Religion`
+  * `Sleight Of Hand` or `Sleight of Hand`
+  * `Stealth`
+  * `Survival`
+* Proficiency bonus: `Proficiency`
+
+Names are case-sensitive. All spaces are ignored.
+
+Internally, calculations are performed with the `pgfmath` package. As such, all mathematical operations supported there *should* be supported here as well. At the very least, this includes basic arithmetic (`+`,`-`,`*`,`/`) and `min`/`max` functions. I can't think of any reason why you'd *need* to get more complicated than that, but if you *really want* to calculate, say, the hyperbolic cosine of your stealth modifier, you should be able to. For a full list of (theoretically) supported functions, see the official [PGF/TikZ documentation](http://ctan.math.washington.edu/tex-archive/graphics/pgf/base/doc/pgfmanual.pdf), pp. 697–709.
+
+Example usage:
+```latex
+\DEX{16} % -> DEX mod = 3
+\Proficiency{2}
+
+\calculate{DEX mod + Proficiency} % = 5
+\calculate{DEXmod+Proficiency} % equally valid, maybe less readable?
+
+\calculate{12 + min(DEX mod,2)} % = 14
+
+\calculate{sqrt(factorial(DEX mod)) + cosh(Proficiency)/pi} % = 3
+
+\calculate*{DEX mod + 7}{\myresult} % ...
+\myresult % prints 10
+```
+
+**Note**: By default, all calculations are performed as floating-point, then the final result is rounded **down** to the nearest integer. If you'd rather round up, wrap your formula in `ceil(...)`. There's currently no way to return a floating point value, although I can't think of why you'd need to.
 
 # License
 All code in this repository is licensed under the WTFPL Version 2. Do whatever y'all want.
