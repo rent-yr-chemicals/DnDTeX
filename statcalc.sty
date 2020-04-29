@@ -4,6 +4,8 @@
 \RequirePackage{pgfkeys}
 \RequirePackage{pgffor}
 
+%%%%% DON'T READ ME, I'M A MESS :) %%%%%
+
 \pgfkeys{
 	/get stat from string/.is family,
 	/get stat from string,
@@ -18,8 +20,6 @@
 	}
 	\expandafter\pgfkeys\expandafter{\key@temp}
 }
-
-%\addstat{<key name>}{<macro with stat value>}
 
 \def\getvalue#1#2{\pgfkeys{/get stat from string,store in=#2,#1}}
 
