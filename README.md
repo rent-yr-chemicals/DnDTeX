@@ -133,12 +133,12 @@ Initiative is calculated automatically from the dexterity modifier. Commands for
 * `\DeathSaveFails{<value>}`: The current number of failed death saving throws
 
 ### Weapons
-* `\Weapon{<weapon name>}{<attack bonus>}{<damage>}{<damage type>}`: Adds a weapon in the "Attacks and Spellcasting" box. The `<attack bonus>` field supports automatic stat/equation parsing.
+* `\Weapon{<weapon name>}{<attack bonus>}{<damage>}{<damage type>}`: Adds a weapon in the "Attacks & Spellcasting" box. The `<attack bonus>` field supports automatic stat/equation parsing.
  
-`\Weapon` can be called multiple times; weapons will be printed in the order they are called. The official character sheet from Wizards of the Coast only includes three weapon boxes. However, `\Weapon` *can* be called more than three times; in this case, additional boxes will be drawn, and any content in the text box below ("`\AttackAndSpellcasting`") will be automatically shifted downwards to compensate.
+`\Weapon` can be called multiple times; weapons will be printed in the order they are called. The official character sheet from Wizards of the Coast only includes three weapon boxes. However, `\Weapon` *can* be called more than three times; in this case, additional boxes will be drawn, and any content in the text box below (see `\AttackAndSpellcasting`) will be automatically shifted downwards to compensate.
 
 ### Money
-Coin values are set with
+Coin values are set with:
 
 * `\CopperPieces{<value>}`
 * `\SilverPieces{<value>}`
@@ -147,6 +147,112 @@ Coin values are set with
 * `\PlatinumPieces{<value>}`
 
 Commands can be called with an empty argument or omitted entirely; in either case, the displayed value defaults to zero.
+
+### Other - Page One
+The rest of the fields on page one ("Equipment", "Features & Traits", etc.) are "text box" fields. Each one corresponds to a TikZ node at the appropriate place on the page; arguments are simply passed "as-is" to each node. Put pretty much anything you want in here.
+
+* `\OtherProficienciesAndLanguages{<content>}`
+* `\AttacksAndSpellcasting{<content>}`
+* `\Equipment{<content>}`
+* `\PersonalityTraits{<content>}`
+* `\Ideals{<content>}`
+* `\Bonds{<content>}`
+* `\Flaws{<content>}`
+
+As noted above, content in the "Attacks & Spellcasting" box will automatically be shifted downwards if more than three weapons are added with `\Weapon`.
+
+`\Equipment` spans the entire width of the box, including the part covered up by the coin boxes. To avoid overlap, enclose the narrower part in the environment `indented`:
+```latex
+\Equipment{%
+    \begin{indented}
+        This is narrower text, it fits next to the coin values.
+    \end{indented}
+    This is full-width text, it fits underneath the coin values at the bottom of the box.
+}
+```
+See the sample sheet for example usage.
+
+### Page Two - Character Appearance
+
+Fields describing the character appearance at the top of page two are:
+
+* `\Age{<age>}`
+* `\Height{<height>}`
+* `\Weight{<weight>}`
+* `\Eyes{<eyes>}`
+* `\Skin{<skin>}`
+* `\Hair{<hair>}`
+
+The larger "Character Appearance" box is defined with:
+
+* `CharacterAppearance{<content>}`
+
+`<content>` can be pretty much anything. In addition to text, it supports `\includegraphics` and, for the artistically inclined, TikZ pictures. By default, font formatting here may not match the rest of the document, so you might need to set it back to the correct font manually.
+
+### Page Two - Other
+
+The rest of the fields on page two are text boxes; rules are the same as described above under "Other - Page One":
+
+* `\Backstory{<content>}`
+* `\AlliesAndOrganizations{<content>}`
+* `\AdditionalFeaturesAndTraits{<content>}`
+* `\Treasure{<content>}`
+
+Additionally, `\AlliesAndOrganizations` can be called with the following optional arguments:
+
+* `\AlliesAndOrganizations[Name]{<name>}`
+* `\AlliesAndOrganizations[Symbol]{<content>}`
+
+These fill out the "Symbol" inset in the "Allies & Organizations" box. When called with `[Symbol]`, `<content>` supports all the same features as `\CharacterAppearance` described above—text, graphics, TikZ pictures, etc.
+
+Note that, unlike the "Equipment" box on page one, text in the "Allies & Organizations" box *will* wrap around the "Symbol" inset automatically.
+
+### Page Three - Spellcasting
+
+Basic spellcasting stats at the top of page three are:
+
+* `\SpellcastingClass{<class>}`
+* `\SpellcastingAbility{<ability>}`: Valid arguments are `STR`, `DEX`, `CON`, `INT`, `WIS`, and `CHA`.
+
+Spell Save DC and Spell Attack Bonus are calculated automatically from Spellcasting Ability.
+
+Spells are added with:
+
+* `\Cantrip{<text>}`: Adds a cantrip.
+* `\Spell{<level>}{<text>}{<prepared>}`: Adds a spell at the specified level. Valid arguments for `<level>` are `Level One`, `Level Two`, ..., `Level Nine` (case-sensitive, space-sensitive). `<prepared>` fills in the "prepared" marks next to each spell. An argument of either `true` or `prepared` (not case-sensitive) will fill in the mark; any other value (including an empty argument) will leave the mark blank.
+
+The class assumes each spell/cantrip only occupies one line. If you need more than one line per spell, you'll need to deal with it manually.
+
+Spell slots are set with:
+
+* `\SpellSlots{<level>}{<total>}{<remaining>}`: Set the slots at the specified level. Valid arguments for `<level>` are the same as for `\Spell`. Draws `<total>` spell slot markers, with `<remaining>` drawn boldly and the rest grayed-out.
+
+### Misc
+
+A few additional commands are included for formatting convenience. They're not necessary, but use them if you want them.
+
+* `conditions`: A list environment for indicating when a particular attack/effect/etc. applies. Seen in the sample sheet under "Sneak attack". Example:
+```latex
+Do this thing if:
+\begin{conditions}
+    \item Something is true
+    \item Something else is true
+    \item ...
+\end{conditions}
+```
+
+* `feature`: A list environment for class/race/background features. Seen in the sample sheet in the "Features & Traits" box. Example:
+```latex
+\begin{feature}{A Class Feature}
+    \item One of this feature's effects
+    \item Another effect
+    \item ...
+\end{feature}
+```
+
+* `\spacer[<dimension>]`: Prints a gray, horizontal line; nice for separating fields within text boxes. Seen in the sample sheet under "Equipment" and "Other Proficiencies & Languages". The optional `<dimension>` argument sets the vertical space after the spacer; default is `0.35ex`.
+
+* `\plus` and `\minus`: Formatted + and - signs for stat modifiers. LaTeX's default +/- look too big when they're not in an equation; these sometimes look better. Use to taste.
 
 # License
 All code in this repository is licensed under the WTFPL Version 2. Do whatever y'all want.
