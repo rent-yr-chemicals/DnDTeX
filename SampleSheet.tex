@@ -116,26 +116,26 @@
 \Weapon%
 	{Shortsword\textsuperscript{\tiny1}}%
 	{DEX mod + Proficiency}%
-	{1d6\plus\getstat{DEX mod}}%
+	{1d6+\getstat{DEX mod}}%
 	{piercing}%
 \Weapon%
 	{Shortbow\textsuperscript{\tiny2}}%
 	{DEX mod + Proficiency}%
-	{1d6\plus\getstat{DEX mod}}%
+	{1d6+\getstat{DEX mod}}%
 	{piercing}%
 \Weapon%
 	{Dagger\textsuperscript{\tiny1,3}}%
 	{DEX mod + Proficiency}%
-	{1d4\plus\getstat{DEX mod}}%
+	{1d4+\getstat{DEX mod}}%
 	{piercing}%
 
 \AttacksAndSpellcasting{%
 %
-	{\tiny1.}\,\,Finesse \par
-	{\tiny2.}\,\,Ranged: {\bfseries80 ft}, {\bfseries320 ft} with disadvantage \par
-	{\tiny3.}\,\,Thrown: {\bfseries20 ft}, {\bfseries60 ft} with disadvantage \par
+	{\tiny1.}\,\,Finesse\par
+	{\tiny2.}\,\,Ranged: {\bfseries80 ft}, {\bfseries320 ft} with disadvantage\par
+	{\tiny3.}\,\,Thrown: {\bfseries20 ft}, {\bfseries60 ft} with disadvantage\par
 	
-	\spacer[2.5pt]
+	\spacer[0.8ex]
 	
 	{\bfseries Sneak\,Attack}:\,\,Once per turn, on a successful attack, deal one creature {\bfseries1d6} extra damage with
 		a finesse or ranged weapon if:
@@ -159,10 +159,10 @@
 		{\bfseries Armor}: Leather armor \par\spacer
 		{\bfseries Tools}: Thieves' tools (small file, lockpicks, handle mirror, narrow-bladed scissors, pliers) \par\spacer
 		{\bfseries Burglar's pack}: 5 day's rations, waterskin, tinderbox, hooded lantern \& 2 flasks of oil, 5 candles,
-				crowbar, hammer, 10 pitons, 1000 ball bearings, bell, 10 feet of string, 50 feet of hemp rope \par
+                crowbar, hammer, 10 pitons, 1000 ball bearings, bell, 10 feet of string, 50 feet of hemp rope
 	\end{indented}
-	\par\spacer
-	{\bfseries Other}: Common clothes, small knife, map of {\color{black!50}[home city]}, {\color{black!50}["token of home''(?)]}
+	\spacer
+	{\bfseries Other}: Common clothes, small knife, map of home city, "token of home''
 %
 }
 
@@ -301,7 +301,7 @@
 \Cantrip{Baz}
 
 \SpellSlots{Level One}{4}{3}
-\Spell{Level One}{Foo}{}
+\Spell{Level One}{}{}
 \Spell{Level One}{Bar}{Prepared}
 
 \SpellSlots{Level Two}{4}{3}

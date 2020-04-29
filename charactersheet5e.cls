@@ -110,7 +110,8 @@
 	\the\count255%
 }
 
-\newcommand{\spacer}[1][1pt]{{\color{black!20}\vspace{-3.5pt}\hrulefill}\par\vspace{#1}}
+\newcommand{\spacer}[1][0.35ex]{{\color{black!20}\vspace{-1ex}\hrulefill}\par\vspace{#1}}
+%\newcommand{\spacer}[1][1pt]{{\color{black!20}\vspace{-3.5pt}\hrulefill}\par\vspace{#1}}
 
 \newenvironment{feature}[1]{%
 	{\bfseries #1}
@@ -132,11 +133,19 @@
 
 \newenvironment{conditions}{%
 	\begin{enumerate}[
-		topsep=1ex,
-		itemsep=0.75ex,
+		topsep=0.75ex,
+		itemsep=0.5ex,
+		itemindent=0pt,
 		parsep=0pt,
+		labelindent=0pt,
+		labelwidth=1em,
+		labelsep=0.5em,
 		leftmargin=1.5em,
-		labelsep=0.3em,
+%		topsep=1ex,
+%		itemsep=0.75ex,
+%		parsep=0pt,
+%		leftmargin=1.5em,
+%		labelsep=0.3em,
 		label={\upshape\alph*\hspace{0.5pt})}
 	]
 }%
@@ -148,11 +157,11 @@
 	\hfill\begin{minipage}[t]{\dimexpr\textwidth-0.62in}\raggedright%
 }%
 {%
-	\xdef\tpd{\the\prevdepth}
+	\par\xdef\tpd{\the\prevdepth}
 	%
 	\end{minipage}
 	
-	\prevdepth\tpd	%
+	\prevdepth\tpd	\par%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -922,7 +931,7 @@
 				\calculate*{\@AtkBonus}{\AtkBonus@calculated}
 	
 				\ifnum\AtkBonus@calculated > 0
-					\def\@plusorminus{\plus}
+					\def\@plusorminus{{\altsffamily\footnotesize+}}
 				\else
 					\def\@plusorminus{\relax}
 				\fi
