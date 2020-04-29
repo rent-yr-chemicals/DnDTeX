@@ -53,8 +53,6 @@
 	\foreach \x in \formula@as@list{%
 		\if\isletter{\x}%
 			\xdef\stat@string{\stat@string\x}%
-		\else	\if\x:%
-			\xdef\stat@string{\stat@string\x}%
 		\else%
 			\ifx\stat@string\empty%
 				\relax%
@@ -64,7 +62,7 @@
 				\xdef\stat@string{}%
 			\fi%
 			\xdef\@formula{\@formula\x}%
-		\fi\fi%
+		\fi%
 	}%
 	\ifx\stat@string\empty%
 		\relax%
